@@ -1,7 +1,7 @@
-var mysql = require("mysql");
-var inquirer = require("inquirer");
+let mysql = require("mysql");
+let inquirer = require("inquirer");
 
-var connection = mysql.createConnection({
+let connection = mysql.createConnection({
   host: "localhost",
 
   // Your port; if not 3306
@@ -11,8 +11,8 @@ var connection = mysql.createConnection({
   user: "root",
 
   // Your password
-  password: "",
-  database: "top_songsDB"
+  password: "vegetable",
+  database: "employees_seed"
 });
 
 connection.connect(function(err) {
