@@ -6,13 +6,13 @@ VALUES ('Administration', 1000000),
        ('Cafeteria and Catering', 50000),
        ('Credit and Lending', 400000);
        
-INSERT INTO roles (title, salary)
-VALUES ('Boss of Bosses', 1000000),
-       ('Therapist', 75000),
-       ('Collections Agent', 100000),
-       ('Negotiator', 150000),
-       ('Chef', 50000),
-       ('Loan Broker', 200000);
+INSERT INTO roles (title, salary, department_id)
+VALUES ('Boss of Bosses', 1000000, 1),
+       ('Therapist', 75000, 2),
+       ('Collections Agent', 100000, 3),
+       ('Negotiator', 150000, 4),
+       ('Chef', 50000, 5),
+       ('Loan Broker', 200000, 6);
 	
 INSERT INTO employee (first_name, nickname, last_name, salary, manager_id, roles_id)
 VALUES ('Anthony', 'The Boss', 'Soprano', 1000000, null, 1),
@@ -25,3 +25,7 @@ VALUES ('Anthony', 'The Boss', 'Soprano', 1000000, null, 1),
        ('Vito', Null, 'Spatafore', 100000, 6, 4),
        ('Ralph', 'Ralphie', 'Cifaretto', 200000, 1, 6),
        ('Arthur', 'Artie the Chef', 'Bucco', 50000, 1, 5);
+
+SELECT * FROM employee;
+SELECT * FROM roles;
+SELECT * FROM department;       
