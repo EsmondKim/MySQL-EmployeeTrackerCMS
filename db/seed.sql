@@ -12,10 +12,12 @@ VALUES ('Anthony', 'The Boss', 'Soprano', 1000000),
 
 INSERT INTO department (dept_name, utilized_budget)
 VALUES ('Administration', 1000000),
-       --('Therapy and Human Resources', 75000),
-       (),
-       ();
-
+       ('Therapy and Human Resources', 75000),
+       ('Debt Collection',),
+       ('Chiropractic, Surgerical, and Firearms Unit'),
+       ('Cafeteria and Catering'),
+       ('Credit and Lending');
+       
 INSERT INTO roles (title, salary)
 VALUES (),
        ();
