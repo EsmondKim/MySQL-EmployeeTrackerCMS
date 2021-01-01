@@ -28,7 +28,7 @@ function runSearch() {
   })
   .then(function(answer) {
     console.log(answer);
-      switch (answer.action) {
+      switch (answer.whatDo) {
         case "View all departments.":
           viewDepartments();
           break;
@@ -64,3 +64,34 @@ function runSearch() {
     });
   }
 
+  function viewDepartments() {
+    console.log("View departments.");
+  }
+
+  function viewEmployees() {
+    console.log("View employees.");
+  }
+
+  function viewEmpsByDept() {
+    console.log("View Emps by Dept.");
+  }
+
+  function viewEmpsByMgr() {
+    console.log("view emps by Mgr.");
+  }
+  
+  function addEmployee() {
+    console.log("Add employee.");
+  }
+
+  function removeEmployee() {
+    console.log("Remove employee.");
+  }
+
+  function updateEmpRole() {
+    console.log("Update emp role.");
+  }
+
+  function updateEmpMgr() {
+    console.log("UPdate emp manager.")
+  }
