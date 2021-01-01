@@ -15,6 +15,18 @@ let connection = mysql.createConnection({
 connection.connect(function(err) {
   if (err) throw err;
     console.log("connected as id " + connection.threadId + "\n");
-  //runSearch();
+  runSearch();
 });
 
+function runSearch() {
+  inquirer
+  .prompt({
+    name: "whatDo",
+    type: "list",
+    message: "What would you like to do?",
+    choices: ["View all departments.", "View all employees.", "View all employees by department.", "View all employees by manager.", "Add employee.", "Remove employee.", "Update employee role.", "Update employee manager."]
+  })
+  .then(function(answer) {
+    console.log(answer);
+    });
+  }
