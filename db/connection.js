@@ -28,5 +28,39 @@ function runSearch() {
   })
   .then(function(answer) {
     console.log(answer);
+      switch (answer.action) {
+        case "View all departments.":
+          viewDepartments();
+          break;
+
+        case "View all employees.":
+          viewEmployees();
+          break;
+
+        case "View all employees by department.":
+          viewEmpsByDept();
+          break;
+
+        case "View all employees by manager.":
+          viewEmpsByMgr();
+          break;
+
+        case "Add employee.":
+          addEmployee();
+          break;
+
+        case "Remove employee.":
+          removeEmployee();
+          break;
+
+        case "Update employee role.":
+          updateEmpRole();
+          break;  
+        
+        case "Update employee manager.":
+          updateEmpMgr();
+          break;
+      }     
     });
   }
+
