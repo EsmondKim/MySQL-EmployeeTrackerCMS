@@ -6,6 +6,7 @@ USE employeesdb;
 CREATE TABLE employee (
     id INT NOT NULL AUTO_INCREMENT,
     first_name VARCHAR(30) NOT NULL,
+    nickname VARCHAR(30),
     last_name VARCHAR(30) NOT NULL,
     salary DECIMAL,
     FOREIGN KEY (roles_id) REFERENCES roles (id),
