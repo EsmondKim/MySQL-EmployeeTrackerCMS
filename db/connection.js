@@ -68,7 +68,10 @@ function runSearch() {
     console.log("View departments.");
     connection.query("Select id, dept_name, utilized_budget FROM department", function (err, res) {
       if (err) throw err;
-      console.log(JSON.stringify(res));
+      console.log("ID|____DEPARTMENT NAME____|__UTILIZED BUDGET__|\n");
+      for (var i = 0; i < res.length; i++) {
+        console.log(res[i].id + " | " + res[i].dept_name + " | " + res[i].utilized_budget + " | ");
+      }
     })
   }
 
