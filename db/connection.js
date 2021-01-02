@@ -66,6 +66,10 @@ function runSearch() {
 
   function viewDepartments() {
     console.log("View departments.");
+    connection.query("Select id, dept_name, utilized_budget FROM department", function (err, res) {
+      if (err) throw err;
+      console.log(JSON.stringify(res));
+    })
   }
 
   function viewEmployees() {
