@@ -1,5 +1,6 @@
-let mysql = require("mysql");
-let inquirer = require("inquirer");
+const mysql = require("mysql");
+const inquirer = require("inquirer");
+const cTable = require("console.table");
 
 let connection = mysql.createConnection({
   host: "localhost",
@@ -66,12 +67,9 @@ function runSearch() {
   function viewDepartments() {
     connection.query("Select id, dept_name, utilized_budget FROM department", function (err, res) {
       if (err) throw err;
-      console.log("ID|____DEPARTMENT NAME____|__UTILIZED BUDGET__|");
-      for (let i = 0; i < res.length; i++) {
-        console.log(res[i].id + " | " + res[i].dept_name + " | " + res[i].utilized_budget + " | ");
-      }
-    })
-  }
+      console.table('Departments', res);
+      })
+    }
 
   function viewEmployees() {
     let query = "SELECT employee.id, employee.first_name, employee.nickname, employee.last_name, department.dept_name, employee.salary, roles.title, mgr_name ";
@@ -81,13 +79,10 @@ function runSearch() {
     query += "LEFT JOIN manager ON employee.manager_id = manager.id ";
     
     connection.query(query, function (err, res) {
-      //console.log("ID|__FIRST NAME__|__NICKNAME__|__LAST NAME__|___DEPARTMENT___|_TITLE_|_SALARY_|_MANAGER_|");
-      for (let i = 0; i < res.length; i++) {
-        console.log(res[i].id + " | " + res[i].first_name + " | " + res[i].nickname + " | " + res[i].last_name + " | " + res[i].dept_name + " | " + res[i].salary + " | " + res[i].title + " | " + res[i].mgr_name + " | ");     
-      }
-    })
-  }
-
+        console.table('All Employees', res);
+        })
+    }
+  
   function viewEmpsByDept() {
     console.log("View Emps by Dept.");
   } 
