@@ -85,6 +85,13 @@ function runSearch() {
   
   function viewEmpsByDept() {
     console.log("View Emps by Dept.");
+    let query = "SELECT department.dept_name, employee.id, employee.first_name, employee.nickname, employee.last_name ";
+    query += "FROM department ";
+    query += "INNER JOIN employee ON employee.emp_dept = department.dept_name ";
+    query += "ORDER BY department.dept_name";
+    connection.query(query, function (err, res) {
+      console.table('Employees By Department', res);
+      })
   } 
 
   function viewEmpsByMgr() {
