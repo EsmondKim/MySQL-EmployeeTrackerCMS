@@ -14,18 +14,24 @@ VALUES ('Boss of Bosses', 1000000, 1),
        ('Chef', 50000, 5),
        ('Loan Broker', 200000, 6);
 	
-INSERT INTO employee (first_name, nickname, last_name, salary, manager_id, roles_id)
-VALUES ('Anthony', 'The Boss', 'Soprano', 1000000, null, 1),
-       ('Jennifer', Null, 'Melfi', 75000, 1, 2),
-       ('Christopher', 'The Nephew', 'Moltisanti', 100000, null, 3),
-       ('Peter', 'Paulie Walnuts', 'Gualtieri', 100000, 3, 3),
-       ('Patsy', Null, 'Parisi', 100000, 3, 3),
-       ('Furio', 'The Enforcer', 'Giunta', 100000, null, 4),
-       ('Anthony', 'Lil Tony','Blundetto', 100000, 6, 4),
-       ('Vito', Null, 'Spatafore', 100000, 6, 4),
-       ('Ralph', 'Ralphie', 'Cifaretto', 200000, 1, 6),
-       ('Arthur', 'Artie the Chef', 'Bucco', 50000, 1, 5);
+INSERT INTO employee (first_name, nickname, last_name, emp_dept, salary, manager_id, roles_id)
+VALUES ('Anthony', 'The Boss', 'Soprano', 'Administration', 1000000, null, 1),
+       ('Jennifer', Null, 'Melfi', 'Therapy and Human Resources', 75000, 1, 2),
+       ('Christopher', 'The Nephew', 'Moltisanti', 'Debt Collection', 100000, null, 3),
+       ('Peter', 'Paulie Walnuts', 'Gualtieri', 'Debt Collection', 100000, 3, 3),
+       ('Patsy', Null, 'Parisi', 'Debt Collection', 100000, 3, 3),
+       ('Furio', 'The Enforcer', 'Giunta', 'Chiropractic and Firearms Unit', 100000, null, 4),
+       ('Anthony', 'Lil Tony','Blundetto', 'Chiropractic and Firearms Unit', 100000, 6, 4),
+       ('Vito', Null, 'Spatafore', 'Chiropractic and Firearms Unit', 100000, 6, 4),
+       ('Ralph', 'Ralphie', 'Cifaretto', 'Credit and Lending', 200000, 1, 6),
+       ('Arthur', 'Artie the Chef', 'Bucco', 'Cafeteria and Catering', 50000, 1, 5);
+
+INSERT INTO manager (id, mgr_name)
+VALUES (1, 'Anthony Soprano'),
+       (3, 'Christopher Moltisanti'),
+       (6, 'Furio Giunta');
 
 SELECT * FROM employee;
 SELECT * FROM roles;
-SELECT * FROM department;       
+SELECT * FROM department;
+SELECT * FROM manager;       
