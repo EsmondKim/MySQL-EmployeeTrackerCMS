@@ -106,9 +106,106 @@ function runSearch() {
   }
   
   function addEmployee() {
-    console.log("Add employee.");
-  }
+    inquirer
+    .prompt([      
+      {
+        name: "newEmpFirstName",
+        type: "input",
+        message: "What is the new employee's first name? (Required.)"
+      },
+      {
+        name: "newEmpNickname",
+        type: "input",
+        message: "What is the new employee's nickname, if any? (Leave blank if none)"
+      },
+      {
+        name: "newEmpLastName",
+        type: "input",
+        message: "What is the new employee's last name? (Required.)"
+      },
+      {
+        name: "newEmpDept",
+        type: "list",
+        message: "What is the new employee's department? (Required)",
+        choices: ['Therapy & HR', 'Debt Collection', 'Chiropractic & Firearms', 'Cafeteria and Catering', 'Credit and Lending']
+      },
+      {
+        name: "newEmpSalary",
+        type: "input",
+        message: "What is the new employee's salary? (Required)"
+      },
+      {
+        name: "newEmpManager",
+        type: "list",
+        message: "Who will manage this new employee?",
+        choices: ["Anthony Soprano", "Christopher Moltisanti", "Furio Giunta", "Nobody/Fuggedaboutit"],
+      },
+      {
+        name: "newEmpRole",
+        type: "list",
+        message: "What will the new employee's role be? (Required)",
+        choices: ['Therapist', 'Collections Agent', 'Negotiator', 'Chef', 'Loan Broker']
+      }
+    ])
 
+    .then(function(answer) {
+      var newEmpsMgr = " "
+
+      if (answer.newEmpManager === "Anthony Soprano") {
+        newEmpsMgr = 1;
+      }
+   
+      if (answer.newEmpManager === "Christopher Moltisanti") {
+        newEmpsMgr = 3;
+      }
+      
+      if (answer.newEmpManager === "Furio Giunta") {
+        newEmpsMgr = 6;
+      }
+      
+      if (answer.newEmpManager === "Nobody/Fuggedaboutit") {
+        newEmpsMgr = null;
+      }
+      
+      var newEmpsRole = " ";
+      
+      if (answer.newEmpRole === 'Therapist') {
+        newEmpsRole = 2
+      }
+      if (answer.newEmpRole === 'Collections Agent') {
+        newEmpsRole = 3
+      }
+      if (answer.newEmpRole === 'Negotiator') {
+        newEmpsRole = 4
+      }
+      if (answer.newEmpRole === 'Chef') {
+        newEmpsRole = 5
+      }
+      if (answer.newEmpRole === 'Loan Broker') {
+        newEmpsRole = 6
+      }
+
+      var query = connection.query(
+        "INSERT INTO employee SET ?",
+        {
+          first_name: answer.newEmpFirstName,
+          nickname: answer.newEmpNickname,
+          last_name: answer.newEmpLastName,
+          emp_dept: answer.newEmpDept,
+          salary: answer.newEmpSalary,
+          roles_id: newEmpsRole,
+          manager_id: newEmpsMgr
+         },
+    
+        function (err, res) {
+          if (err) throw err;
+          console.log(res.affectedRows + " employee added!\n");
+          runSearch()
+        }
+      )
+    })
+  }
+  
   function removeEmployee() {
     console.log("Remove employee.");
   }
