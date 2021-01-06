@@ -25,7 +25,7 @@ function runSearch() {
     name: "whatDo",
     type: "list",
     message: "What would you like to do?",
-    choices: ["View all departments.", "View all employees.", "View all employees by department.", "View all employees by manager.", "Add employee.", "Remove employee.", "Update employee role.", "Update employee manager."]
+    choices: ["View all departments.", "View all employees.", "View all employees by department.", "View all employees by manager.", "Add employee.", "Remove employee.", "Update employee role.", "Update employee manager.", "End session."]
   })
   .then(function(answer) {
       switch (answer.whatDo) {
@@ -60,6 +60,10 @@ function runSearch() {
         case "Update employee manager.":
           updateEmpMgr();
           break;
+
+        case "End session.":
+          endSession();
+          break;
       }     
     });
   }
@@ -68,6 +72,7 @@ function runSearch() {
     connection.query("Select id, dept_name, utilized_budget FROM department", function (err, res) {
       if (err) throw err;
       console.table('Departments', res);
+      runSearch()
       })
     }
 
@@ -80,7 +85,8 @@ function runSearch() {
     
     connection.query(query, function (err, res) {
         console.table('All Employees', res);
-        })
+        runSearch()
+      })
     }
   
   function viewEmpsByDept() {
@@ -91,6 +97,7 @@ function runSearch() {
     
     connection.query(query, function (err, res) {
       console.table('Employees By Manager', res);
+      runSearch()
       })
   } 
 
@@ -102,6 +109,7 @@ function runSearch() {
     query += "ORDER BY manager.mgr_name";
     connection.query(query, function (err, res) {
       console.table('Employees By Manager', res);
+      runSearch()
       })
   }
   
@@ -206,14 +214,91 @@ function runSearch() {
     })
   }
   
-  function removeEmployee() {
-    console.log("Remove employee.");
-  }
-
   function updateEmpRole() {
-    console.log("Update emp role.");
-  }
+    let query = "SELECT employee.id, employee.first_name, employee.nickname, employee.last_name, department.dept_name, roles.title ";
+    query += "FROM employee ";
+    query += "INNER JOIN department ON employee.emp_dept = department.dept_name ";
+    query += "INNER JOIN roles ON department.id = roles.department_id ";
 
+    connection.query(query, function(err, results) {
+    if (err) throw err;
+    
+    inquirer
+      .prompt([
+        {
+          name: "choice",
+          type: "rawlist",
+          message: "Which employee's role would you like to update?",
+          choices: function() {
+            console.log(results)
+            let choiceArray = [];
+              for (let i=0; i < results.length; i++) {
+              let emp = "";
+                //choiceArray.push(results[i].id, results[i].first_name);
+              //employee.id, employee.first_name, employee.nickname, employee.last_name, department.dept_name, roles.title 
+             
+            //emp = results[i].id + " " + results[i].first_name;
+            //emp = `${results[i].id} ${results[i].first_name}`;
+            emp = emp.concat(results[i].id).concat(" ").concat(results[i].first_name);
+
+
+
+              choiceArray.push(emp)
+
+            }
+            //console.log(choiceArrayString);
+          return choiceArray;
+          }
+        },
+        {
+          name: "roleUpdate",
+          type: "list",
+          message: "What role would you like to update this employee's role to?",
+          choices: ['Therapist', 'Collections Agent', 'Negotiator', 'Chef', 'Loan Broker']
+        }
+      ])
+    //   .then(function(answer) {
+    //     let empToUpdateRole = " "
+    //     if 
+    //   })
+    // }
+      
+  })
+}
+
+  // function removeEmployee() {
+  //   connection.query("SELECT first_name, nickname, last_name FROM employee") {
+  //   if (err) throw err;
+  //   for (var i = 0; i < res.length; i++) {
+  //     console.log(res[i].first_name, res[i].nickname, res[i].last_name)
+  //     }
+  //   })
+
+    // inquirer
+    // .prompt([  
+    //   {
+    //     name: "whichDelete",
+    //     type: "rawlist",
+    //     message: "Which employee would you like to delete?",
+    //     choices: function() {
+    //       let choiceArray = [];
+    //       for (var i = 0; i < results.length; i++) {
+    //       choiceArray.push(results[i].item_name);
+    //     }
+    //     return choiceArray;
+    //   }
+    //   .then(function(answer {
+    //     var 
+    //   }))     
+    //   ])
+    //   }
+      // message: "Which employee would you like to delete?
+    
   function updateEmpMgr() {
     console.log("UPdate emp manager.")
+  }
+
+  function endSession() {
+    console.log("Session ended.  Thanks for using Employee Tracker CMS.");
+    connection.end();
   }

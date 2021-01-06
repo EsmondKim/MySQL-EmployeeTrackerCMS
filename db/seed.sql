@@ -4,7 +4,7 @@ VALUES ('Administration', 1000000),
        ('Debt Collection', 300000),
        ('Chiropractic & Firearms', 300000),
        ('Cafeteria and Catering', 50000),
-       ('Credit and Lending', 400000);
+       ('Credit & Lending', 400000);
        
 INSERT INTO roles (title, salary, department_id)
 VALUES ('Boss of Bosses', 1000000, 1),
