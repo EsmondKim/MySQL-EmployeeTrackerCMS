@@ -79,7 +79,7 @@ function runSearch() {
   function viewEmployees() {
     let query = "SELECT employee.id, employee.first_name, employee.nickname, employee.last_name, department.dept_name, employee.salary, roles.title, mgr_name ";
     query += "FROM employee "; 
-    query += "INNER JOIN department ON employee.emp_dept = department.dept_name ";  
+    query += "INNER JOIN department ON employee.emp_dept = department.dept_name "; 
     query += "INNER JOIN roles ON department.id = roles.department_id ";
     query += "LEFT JOIN manager ON employee.manager_id = manager.id ";
     
@@ -215,7 +215,7 @@ function runSearch() {
   }
   
   function updateEmpRole() {
-    let query = "SELECT employee.id, employee.first_name, employee.nickname, employee.last_name, department.dept_name, roles.title ";
+    let query = "SELECT employee.id, employee.first_name, employee.nickname, employee.last_name, department.dept_name, employee.roles_id, roles.title ";
     query += "FROM employee ";
     query += "INNER JOIN department ON employee.emp_dept = department.dept_name ";
     query += "INNER JOIN roles ON department.id = roles.department_id ";
@@ -230,23 +230,12 @@ function runSearch() {
           type: "rawlist",
           message: "Which employee's role would you like to update?",
           choices: function() {
-            console.log(results)
             let choiceArray = [];
-              for (let i=0; i < results.length; i++) {
-              let emp = "";
-                //choiceArray.push(results[i].id, results[i].first_name);
-              //employee.id, employee.first_name, employee.nickname, employee.last_name, department.dept_name, roles.title 
-             
-            //emp = results[i].id + " " + results[i].first_name;
-            //emp = `${results[i].id} ${results[i].first_name}`;
-            emp = emp.concat(results[i].id).concat(" ").concat(results[i].first_name);
-
-
-
+              for (let i=1; i < results.length; i++) {
+              let emp = ""; 
+              emp = `${results[i].id} ${results[i].first_name} ${results[i].nickname} ${results[i].last_name} ${results[i].dept_name} ${results[i].roles_id} ${results[i].title}`
               choiceArray.push(emp)
-
             }
-            //console.log(choiceArrayString);
           return choiceArray;
           }
         },
@@ -257,48 +246,84 @@ function runSearch() {
           choices: ['Therapist', 'Collections Agent', 'Negotiator', 'Chef', 'Loan Broker']
         }
       ])
-    //   .then(function(answer) {
-    //     let empToUpdateRole = " "
-    //     if 
-    //   })
-    // }
-      
-  })
-}
+      .then(function(answer) {
+      updateToChosenRole(answer);
+      return answer;
+      })
+    })  
+  }
+
+  function updateToChosenRole(answer) {
+    newRoleId = "";
+
+    if (answer.roleUpdate === 'Therapist') {
+      newRoleId = 2;
+    }
+    if (answer.roleUpdate === 'Collections Agent') {
+     newRoleId = 3;
+    }
+    if (answer.roleUpdate === 'Negotiator') {
+     newRoleId = 4;
+    }
+    if (answer.roleUpdate === 'Chef') {
+     newRoleId = 5;
+    }
+    if (answer.roleUpdate === 'Loan Broker') {
+     newRoleId = 6;
+    }
+
+    let choiceStr = answer.choice.split(" ")
+    console.log(answer);
+    console.log(choiceStr[0]);
+    
+    connection.query(
+      "UPDATE employee SET ? WHERE ?",
+      [
+        {
+          roles_id: newRoleId,
+          thing: otherThing //Use this to update Dept Name in Employee table
+        },
+        {
+          id: parseInt(choiceStr[0])
+        }
+      ],
+      function(error, res) {
+        if (error) throw error;
+        console.log(res.affectedRows + " You UPDATED the Employee's Role!");
+      runSearch();
+      }
+    )
+  }
 
   // function removeEmployee() {
-  //   connection.query("SELECT first_name, nickname, last_name FROM employee") {
-  //   if (err) throw err;
-  //   for (var i = 0; i < res.length; i++) {
-  //     console.log(res[i].first_name, res[i].nickname, res[i].last_name)
-  //     }
-  //   })
+  //   let query = "SELECT employee.id, employee.first_name, employee.nickname, employee.last_name ";
+  //   connection.query(query, function(err, results) {
+  //     if (err) throw err;
+  //     inquirer
+  //     .prompt([
+  //       {
+  //         name: "choice",
+  //         type: "rawlist",
+  //         message: "Which employee's role would you like to delete?",
+  //         choices: function() {
+  //           let choiceArray = [];
+  //             for (let i=1; i < results.length; i++) {
+  //             let emp = " "; 
+  //             emp = `${results[i].id} ${results[i].first_name} ${results[i].nickname} ${results[i].last_name}`
+  //             choiceArray.push(emp)
+  //           }
+  //         return choiceArray;
+  //         }
+  //       },
+      
 
-    // inquirer
-    // .prompt([  
-    //   {
-    //     name: "whichDelete",
-    //     type: "rawlist",
-    //     message: "Which employee would you like to delete?",
-    //     choices: function() {
-    //       let choiceArray = [];
-    //       for (var i = 0; i < results.length; i++) {
-    //       choiceArray.push(results[i].item_name);
-    //     }
-    //     return choiceArray;
-    //   }
-    //   .then(function(answer {
-    //     var 
-    //   }))     
-    //   ])
-    //   }
-      // message: "Which employee would you like to delete?
+  
     
   function updateEmpMgr() {
     console.log("UPdate emp manager.")
   }
 
-  function endSession() {
-    console.log("Session ended.  Thanks for using Employee Tracker CMS.");
-    connection.end();
-  }
+  // function endSession() {
+  //   console.log("Session ended.  Thanks for using Employee Tracker CMS.");
+  //   connection.end();
+  // }
