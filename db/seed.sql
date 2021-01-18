@@ -3,7 +3,7 @@ VALUES ('Administration', 1000000),
        ('Therapy & HR', 75000),
        ('Debt Collection', 300000),
        ('Chiropractic & Firearms', 300000),
-       ('Cafeteria and Catering', 50000),
+       ('Cafeteria & Catering', 50000),
        ('Credit & Lending', 400000);
        
 INSERT INTO roles (title, salary, department_id)
@@ -23,8 +23,8 @@ VALUES ('Anthony', 'The Boss', 'Soprano', 'Administration', 1000000, null, 1),
        ('Furio', 'The Enforcer', 'Giunta', 'Chiropractic & Firearms', 100000, null, 4),
        ('Anthony', 'Lil Tony','Blundetto', 'Chiropractic & Firearms', 100000, 6, 4),
        ('Vito', Null, 'Spatafore', 'Chiropractic & Firearms', 100000, 6, 4),
-       ('Ralph', 'Ralphie', 'Cifaretto', 'Credit and Lending', 200000, 1, 6),
-       ('Arthur', 'Artie the Chef', 'Bucco', 'Cafeteria and Catering', 50000, 1, 5);
+       ('Ralph', 'Ralphie', 'Cifaretto', 'Credit & Lending', 200000, 1, 6),
+       ('Arthur', 'Artie the Chef', 'Bucco', 'Cafeteria & Catering', 50000, 1, 5);
 
 INSERT INTO manager (id, mgr_name)
 VALUES (1, 'Anthony Soprano'),

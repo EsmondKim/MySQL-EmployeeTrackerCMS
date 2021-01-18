@@ -255,21 +255,33 @@ function runSearch() {
 
   function updateToChosenRole(answer) {
     newRoleId = "";
+    newDept = "";
+    newMgr = "";
 
     if (answer.roleUpdate === 'Therapist') {
       newRoleId = 2;
+      newDept = 'Therapy & HR';
+      newMgr = 1;
     }
     if (answer.roleUpdate === 'Collections Agent') {
      newRoleId = 3;
+     newDept = 'Debt Collection';
+     newMgr = 3;
     }
     if (answer.roleUpdate === 'Negotiator') {
      newRoleId = 4;
+     newDept = 'Chiropractic & Firearms';
+     newMgr = 6;
     }
     if (answer.roleUpdate === 'Chef') {
      newRoleId = 5;
+     newDept = 'Cafeteria & Catering';
+     newMgr = 1;
     }
     if (answer.roleUpdate === 'Loan Broker') {
      newRoleId = 6;
+     newDept = 'Credit & Lending';
+     newMgr = 1;
     }
 
     let choiceStr = answer.choice.split(" ")
@@ -281,7 +293,8 @@ function runSearch() {
       [
         {
           roles_id: newRoleId,
-          thing: otherThing //Use this to update Dept Name in Employee table
+          emp_dept: newDept, //Use this to update Dept Name in Employee table
+          manager_id: newMgr
         },
         {
           id: parseInt(choiceStr[0])
