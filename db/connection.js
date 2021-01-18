@@ -308,32 +308,55 @@ function runSearch() {
     )
   }
 
-  // function removeEmployee() {
-  //   let query = "SELECT employee.id, employee.first_name, employee.nickname, employee.last_name ";
-  //   connection.query(query, function(err, results) {
-  //     if (err) throw err;
-  //     inquirer
-  //     .prompt([
-  //       {
-  //         name: "choice",
-  //         type: "rawlist",
-  //         message: "Which employee's role would you like to delete?",
-  //         choices: function() {
-  //           let choiceArray = [];
-  //             for (let i=1; i < results.length; i++) {
-  //             let emp = " "; 
-  //             emp = `${results[i].id} ${results[i].first_name} ${results[i].nickname} ${results[i].last_name}`
-  //             choiceArray.push(emp)
-  //           }
-  //         return choiceArray;
-  //         }
-  //       },
-      
+  function removeEmployee() {
+    let query = "SELECT employee.id, employee.first_name, employee.nickname, employee.last_name ";
+    query += "FROM employee ";
+    connection.query(query, function(err, results) {
+      if (err) throw err;
+      inquirer
+      .prompt([
+        {
+          name: "choice",
+          type: "rawlist",
+          message: "Which employee would you like to delete?",
+          choices: function() {
+            let choiceArray = [];
+              for (let i=1; i < results.length; i++) {
+              let emp = " "; 
+              emp = `${results[i].id} ${results[i].first_name} ${results[i].nickname} ${results[i].last_name}`
+              choiceArray.push(emp)
+            }
+          return choiceArray;
+          }
+        }
+      ])
+      .then(function(answer) {
+        deleteRemovedEmp(answer);
+        return answer;
+      })
+    })
+  }
+       
+  function deleteRemovedEmp(answer) {
+    let choiceStr = answer.choice.split(" ");
+    connection.query(
+      "DELETE FROM employee WHERE ?",
+      [
+        {
+          id: parseInt(choiceStr[0])
+        }
+      ],
+        function(error, res) {
+          if (error) throw error;
+          console.log(res.affectedRows + " You DELETED the Employee!");
+        runSearch();
+        }
+      )
+    }
 
-  
-    
   function updateEmpMgr() {
-    console.log("UPdate emp manager.")
+ 
+    
   }
 
   // function endSession() {
