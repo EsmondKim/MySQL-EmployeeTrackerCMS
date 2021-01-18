@@ -355,11 +355,76 @@ function runSearch() {
     }
 
   function updateEmpMgr() {
- 
-    
+    let query = "SELECT employee.id, employee.first_name, employee.nickname, employee.last_name ";
+    query += "FROM employee ";
+    connection.query(query, function(err, results) {
+      if (err) throw err;
+      inquirer
+      .prompt([
+        {
+          name: "choice",
+          type: "rawlist",
+          message: "Which employee's manager would you like to update?",
+          choices: function() {
+            let choiceArray = [];
+              for (let i=1; i < results.length; i++) {
+              let emp = " "; 
+              emp = `${results[i].id} ${results[i].first_name} ${results[i].nickname} ${results[i].last_name}`
+              choiceArray.push(emp)
+            }
+          return choiceArray;
+          }
+        },
+        {
+          name: "mgrUpdate",
+          type: "list",
+          message: "Which manager would you like to assign to this employee?",
+          choices: ['Anthony Soprano', 'Christopher Moltisanti', 'Furio Giunta']
+        }
+      ])
+      .then(function(answer) {
+        updateEmployeeMgr(answer);
+        return answer;
+      })
+    })
   }
 
-  // function endSession() {
-  //   console.log("Session ended.  Thanks for using Employee Tracker CMS.");
-  //   connection.end();
-  // }
+  function updateEmployeeMgr(answer) {
+    newMgr = "";
+
+    if (answer.mgrUpdate === 'Anthony Soprano') {
+      newMgr = 1;
+    }
+
+    if (answer.mgrUpdate === 'Christopher Moltisanti') {
+      newMgr = 3;
+    }
+
+    if (answer.mgrUpdate === 'Furio Giunta') {
+      newMgr = 6;
+    }
+
+    let choiceStr = answer.choice.split(" ");
+    
+    connection.query(
+      "UPDATE employee SET ? WHERE ?",
+      [
+        {
+          manager_id: newMgr
+        },
+        {
+          id: parseInt(choiceStr[0])
+        }
+      ],
+      function(error, res) {
+        if (error) throw error;
+        console.log(res.affectedRows + " You UPDATED the Employee's Manager!");
+      runSearch();
+      }
+    )
+  }
+
+  function endSession() {
+    console.log("Session ended. Thanks for using Employee Tracker CMS.");
+    connection.end();
+  }
